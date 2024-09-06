@@ -1,15 +1,53 @@
-// src/app/landing/page.js
+// src/app/page.js
+import React from "react";
 import Link from "next/link";
+
+function RepressoHero() {
+  return (
+    <main className="flex flex-col h-screen bg-white text-slate-800">
+      <section className="relative flex flex-col justify-end w-full h-full px-8 py-12">
+        <img
+          loading="lazy"
+          src="https://cdn.builder.io/api/v1/image/assets/TEMP/737b01bf45d336c3e3e7a1d9d6fa42776eae5a7d7ef56c8fdddec0db7c15ec2f?placeholderIfAbsent=true&apiKey=b08032bf87d54b9ab18475074bc46c1d"
+          alt="Represso background"
+          className="absolute inset-0 object-cover w-full h-full"
+        />
+        <div className="flex items-end justify-center w-full">
+          <h1 className="font-serif text-[268px] max-md:text-4xl text-center z-20" style={{ color: 'rgb(89, 91, 142)' }}>
+            REPRESSO
+          </h1>
+        </div>
+      </section>
+    </main>
+  );
+}
+
+
+
+
+
 
 export default function LandingPage() {
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-gray-100 to-white">
-      <Link href="/collection" className="text-5xl md:text-7xl font-extrabold text-gray-900 hover:text-gray-700 transition duration-300 ease-in-out">
-        REPRESSO
-      </Link>
+    <div className="min-h-screen bg-gradient-to-b from-gray-100 to-white overflow-hidden">
+      <RepressoHero />
     </div>
   );
 }
+
+
+
+// import Link from "next/link";
+
+// export default function LandingPage() {
+//   return (
+//     <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-gray-100 to-white">
+//       <Link href="/collection" className="text-5xl md:text-7xl font-extrabold text-gray-900 hover:text-gray-700 transition duration-300 ease-in-out">
+//         REPRESSO
+//       </Link>
+//     </div>
+//   );
+// }
 
 // import Image from "next/image";
 
