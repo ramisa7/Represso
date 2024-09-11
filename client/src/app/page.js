@@ -1,31 +1,38 @@
+//issues: 
+// - header is black now which might have made 
+// - the page is scrllable now
+// - there is space between the text and the bottom of the page
+
 // src/app/page.js
 import React from "react";
-import Link from "next/link";
+import Link from "next/link"; // Import Link from Next.js
 
 function RepressoHero() {
   return (
-    <main className="flex flex-col h-screen bg-white text-slate-800">
+    <main
+      className="flex flex-col h-screen"
+      style={{ backgroundColor: "rgb(239, 58, 66)" }}
+    >
       <section className="relative flex flex-col justify-end w-full h-full px-8 py-12">
-        <img
-          loading="lazy"
-          src="https://cdn.builder.io/api/v1/image/assets/TEMP/737b01bf45d336c3e3e7a1d9d6fa42776eae5a7d7ef56c8fdddec0db7c15ec2f?placeholderIfAbsent=true&apiKey=b08032bf87d54b9ab18475074bc46c1d"
-          alt="Represso background"
-          className="absolute inset-0 object-cover w-full h-full"
-        />
-        <div className="flex items-end justify-center w-full">
-          <h1 className="font-serif text-[268px] max-md:text-4xl text-center z-20" style={{ color: 'rgb(89, 91, 142)' }}>
+        <div className="flex items-end justify-center w-full h-full">
+          <Link href="/collection"> {/* Wrap the text with Link component */}
+            <h1
+            className="font-serif text-[20vw] text-center cursor-pointer"
+            style={{
+              color: "rgb(89, 91, 142)",
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              userSelect: "none",
+            }}
+          >
             REPRESSO
           </h1>
+          </Link>
         </div>
       </section>
     </main>
   );
 }
-
-
-
-
-
 
 export default function LandingPage() {
   return (
@@ -34,6 +41,8 @@ export default function LandingPage() {
     </div>
   );
 }
+
+
 
 
 
