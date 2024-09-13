@@ -1,7 +1,8 @@
 //issues: 
-// - black smth on the top 
-// - too much whitespacea around the logo name 
+//// - too much whitespacea around the logo name 
 // - the layout of the content is not set. 
+// --------------------------
+// - black smth on the top 
 
 // src/app/collection/page.js
 import React from "react";
@@ -34,7 +35,7 @@ export default function CollectionPage() {
         </Link>
       </header> */}
 
-<div className="flex justify-center items-center my-16">
+      <div className="flex justify-center items-center">
         <Link href="/" passHref>
           <h1
             className="font-serif text-[20vw] text-center cursor-pointer"
