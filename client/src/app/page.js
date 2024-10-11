@@ -9,7 +9,7 @@ import Link from "next/link"; // Import Link from Next.js
 
 function RepressoHero() {
   return (
-    <main
+    <div
       className="flex flex-col h-screen"
       style={{ backgroundColor: "rgb(239, 58, 66)" }}
     >
@@ -30,7 +30,7 @@ function RepressoHero() {
           </Link>
         </div>
       </section>
-    </main>
+    </div>
   );
 }
 

@@ -1,6 +1,7 @@
 // issues: 
 // - idk the connection of things - confirm w david how it works. 
-// teeny tiny detail of the layout needs to be fixed ( the picture needs to take more space on right, left is okay) 
+//  teeny tiny detail of the layout needs to be fixed ( the picture needs to take more space on right, left is okay) 
+// the brand name w header space ( check in collection page - which one is preferred)
 // 
 
 //----------------

@@ -1,11 +1,13 @@
 // issue w this one: 
-// bg - white or transparent (??) 
+// add more padding on top - check compatibility with mobile 
+// add padding on bottom 
 
 // -----------
 // fonts are all okay(!!)
 // - in the collection page, there is a black line ( probably leftover from the header) - all okay 
 // - the landing page has a header now which is black - that was padding - all okay 
 // the content of the header is not properly spaced 
+// bg -  transparent 
 
 "use client";
 
@@ -28,8 +30,8 @@ export default function RootLayout({ children }) {
   ];
 
   // Determine the active link
-  const activeLink = links.find(link => link.href === pathname);
-  const inactiveLinks = links.filter(link => link.href !== pathname);
+  const activeLink = links.find((link) => link.href === pathname);
+  const inactiveLinks = links.filter((link) => link.href !== pathname);
 
   return (
     <html lang="en">
@@ -37,12 +39,15 @@ export default function RootLayout({ children }) {
       <body className={inter.className}>
         {/* Conditionally render the header, hiding it only on the landing page */}
         {pathname !== "/" && (
-          <header className="bg-white text-black p-4 fixed top-0 left-0 w-full z-50">
+          <header
+            className="bg-transparent text-black fixed top-0 left-0 w-full z-50"
+            style={{ paddingTop: "60px", paddingBottom: "60px" }}
+          >
             <nav className="container mx-auto flex items-center justify-between">
               {/* Left-aligned link */}
               <Link
                 href={inactiveLinks[0].href}
-                className={`text-sm font-normal ml-8`}
+                className={`text-sm font-normal ml-14`}
                 style={{ fontFamily: "serif", fontSize: "1.35rem" }}
               >
                 {inactiveLinks[0].label}
@@ -51,8 +56,8 @@ export default function RootLayout({ children }) {
               {/* Centered active link */}
               <Link
                 href={activeLink.href}
-                className={`text-sm font-bold `}
-                style={{ fontFamily: "serif", fontSize: "1.35rem" }}
+                className={`text-sm font-bold mr-4`}
+                style={{ fontFamily: "serif", fontSize: "1.55rem" }}
               >
                 {activeLink.label}
               </Link>
@@ -60,7 +65,7 @@ export default function RootLayout({ children }) {
               {/* Right-aligned link */}
               <Link
                 href={inactiveLinks[1].href}
-                className={`text-sm font-normal mr-8`}
+                className={`text-sm font-normal mr-14`}
                 style={{ fontFamily: "serif", fontSize: "1.35rem" }}
               >
                 {inactiveLinks[1].label}
@@ -73,6 +78,74 @@ export default function RootLayout({ children }) {
     </html>
   );
 }
+
+
+// "use client";
+
+// import { Inter } from "next/font/google";
+// import "./globals.css";
+// import Link from "next/link";
+// import { usePathname } from "next/navigation";
+// import Head from "./head";
+
+// const inter = Inter({ subsets: ["latin"] });
+
+// export default function RootLayout({ children }) {
+//   const pathname = usePathname();
+
+//   // Define the header links
+//   const links = [
+//     { href: "/collection", label: "Collection" },
+//     { href: "/magazine", label: "Magazine" },
+//     { href: "/cart", label: "Bag" },
+//   ];
+
+//   // Determine the active link
+//   const activeLink = links.find(link => link.href === pathname);
+//   const inactiveLinks = links.filter(link => link.href !== pathname);
+
+//   return (
+//     <html lang="en">
+//       <Head />
+//       <body className={inter.className}>
+//         {/* Conditionally render the header, hiding it only on the landing page */}
+//         {pathname !== "/" && (
+//           <header className="bg-white text-black p-4 fixed top-0 left-0 w-full z-50">
+//             <nav className="container mx-auto flex items-center justify-between">
+//               {/* Left-aligned link */}
+//               <Link
+//                 href={inactiveLinks[0].href}
+//                 className={`text-sm font-normal ml-8`}
+//                 style={{ fontFamily: "serif", fontSize: "1.35rem" }}
+//               >
+//                 {inactiveLinks[0].label}
+//               </Link>
+
+//               {/* Centered active link */}
+//               <Link
+//                 href={activeLink.href}
+//                 className={`text-sm font-bold `}
+//                 style={{ fontFamily: "serif", fontSize: "1.35rem" }}
+//               >
+//                 {activeLink.label}
+//               </Link>
+
+//               {/* Right-aligned link */}
+//               <Link
+//                 href={inactiveLinks[1].href}
+//                 className={`text-sm font-normal mr-8`}
+//                 style={{ fontFamily: "serif", fontSize: "1.35rem" }}
+//               >
+//                 {inactiveLinks[1].label}
+//               </Link>
+//             </nav>
+//           </header>
+//         )}
+//         <main>{children}</main> {/* Removed padding to prevent overlap */}
+//       </body>
+//     </html>
+//   );
+// }
 
 
 // "use client";
