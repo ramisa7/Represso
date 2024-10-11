@@ -1,8 +1,11 @@
 //issues: 
 //// - not equal space from the logo to the header (?) ( check the one in magazine - which one do we prefer)
-//  layout of product infos 
-// font and style of product info 
+//  left side too much inside (?)
+// right side info not spaced properly
+// picture - not in the middle exacly 
+// font of everything  
 // hover not added 
+// buttons for sizes are not done right 
 
 // --------------------------
 // - black smth on the top 
@@ -76,52 +79,10 @@ export default function CollectionPage() {
   ]; 
 
 
-  // Load cart from localStorage when component mounts
-  // useEffect(() => {
-  //   const storedCart = localStorage.getItem("cart");
-  //   if (storedCart) {
-  //     setCart(JSON.parse(storedCart)); // Load the stored cart
-  //   }
-  // }, []);
-  
-  // // Save the cart to localStorage when it changes
-  // useEffect(() => {
-  //   localStorage.setItem("cart", JSON.stringify(cart));
-  // }, [cart]);
-  
-  // Handle adding a product to the cart
-  // const handleAddToCart = (product, size) => {
-  //   if (!size) return; // Ensure a size is selected
-
-  //   const newCartItem = {
-  //     id: product.id,
-  //     name: product.name,
-  //     price: product.price,
-  //     size,
-  //   };
-  //   // Check if the product with the same size already exists in the cart
-  //   const existingItem = cart.find(
-  //     (item) => item.id === product.id && item.size === size
-  //   );
-
-  //   setCart((prevCart) => [...prevCart, newCartItem]);
-
-    
-  // };
 
 
   return (
     <div className="relative min-h-screen bg-white text-slate-800 overflow-y-auto">
-      {/* Header */}
-      {/* <header className="flex justify-between items-center p-4">
-        <Link href="/magazine" className="text-sm font-semibold">
-          Magazine
-        </Link>
-        <h1 className="text-xl font-serif">Collection</h1>
-        <Link href="/bag" className="text-sm font-semibold">
-          Bag
-        </Link>
-      </header> */}
 
       <div className="flex justify-center items-center">
         <Link href="/" passHref>
@@ -144,27 +105,29 @@ export default function CollectionPage() {
         {products.map((product) => (
           <div
             key={product.id}
-            className="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] gap-[60px] items-start mb-16"
+            className="grid grid-cols-1 lg:grid-cols-[450px_auto_450px] gap-[60px] items-start mb-16"
           >
             {/* Product Description (Left) */}
-            <div className="flex flex-col bg-red-200 border border-black">
-              <p className="text-lg leading-relaxed ml-6">{product.description}</p>
+            <div className="order-2 lg:order-none flex flex-col justify-center items-center lg:min-h-[600px] p-4">
+              <p className="text-lg leading-relaxed ml-6 first-letter:text-4xl first-letter:font-serif">{product.description}</p>
             </div>
 
             {/* Product Image (Center) */}
-            <div className="flex justify-center items-center bg-blue-200 border border-black">
+            <div className="order-1 lg:order-none flex justify-center items-center"> 
+              {/* bg-blue-200 border border-black */}
               <img
                 src={product.image}
                 alt={product.name}
-                className="w-[450px] h-[600px] object-cover border-2 border-blue-500"
+                className="w-[450px] h-[600px] object-cover"
+                // border-2 border-blue-500
               />
             </div>
 
-            {/* Product Price and Status (Right) */}
-            <div className="flex flex-col items-start bg-green-200 border border-black lg:items-start">
-              <h3 className="text-xl font-serif font-bold">{product.name}</h3>
-              <p className="text-lg font-bold mt-2">{product.price}</p>
-              {/* <p className="text-black-600 mt-2">{product.status}</p> */}
+            {/* Product Price and Status (Right) */} 
+            <div className="order-3 lg:order-none flex flex-col items-start justify-center items-center lg:items-start lg:min-h-[600px] p-4"> 
+              <h3 className="text-xl first-letter:text-4xl first-letter:font-serif font-serif">{product.name}</h3> 
+              <p className="text-lg font-serif mt-2">{product.price}</p>
+            
 
               {/* Size Selector - Only show if product is available */}
               {product.status === "available" && (
@@ -173,7 +136,7 @@ export default function CollectionPage() {
                     <button
                       key={size}
                       onClick={() => addToCart(product, size)} // Use the addToCart from context
-                      className="border border-gray-400 px-4 py-2 bg-white text-gray-800 hover:bg-gray-800 hover:text-white"
+                      className=" px-4 py-2 bg-white text-gray-800 hover:bg-gray-800 hover:text-white"
                     >
                       {size}
                     </button>
@@ -185,11 +148,17 @@ export default function CollectionPage() {
                {product.status === "available_os" && (
                 <button
                   onClick={() => addToCart(product, "OS")} // Automatically add the single size
-                  className="border border-gray-400 px-4 py-2 bg-white text-gray-800 hover:bg-gray-800 hover:text-white mt-4"
+                  className=" px-4 py-2 bg-white text-gray-800 hover:bg-gray-800 hover:text-white mt-4"
                 >
                   OS
                 </button>
               )}
+
+                {/* Display product status only if it's sold out */}
+                {product.status === "sold out" && (
+                   <p className="text-black-600 mt-2">{product.status}</p>
+              )}
+
             </div>
           </div>
         ))}

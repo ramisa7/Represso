@@ -60,7 +60,6 @@ export default function MagazinePage() {
         </Link>
       </div>
       {/* Magazine Issues Section */}
-      {/* Magazine Issues Section */}
       <section className="flex flex-col gap-8 mt-8">
         {magazines.map((magazine) => (
           <div
@@ -71,7 +70,7 @@ export default function MagazinePage() {
             <img
               src={magazine.image}
               alt={magazine.title}
-              className="w-full lg:w-1/2 object-cover lg:pl-4" // Adjust padding-left value as needed
+              className="w-full lg:w-1/2 object-cover lg:pl-6" // Adjust padding-left value as needed
             />
 
             {/* Magazine Details */}
@@ -93,8 +92,6 @@ export default function MagazinePage() {
           </div>
         ))}
       </section>
-
-
 
     </div>
   );
