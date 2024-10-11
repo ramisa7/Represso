@@ -2,23 +2,27 @@
 //// - not equal space from the logo to the header (?) ( check the one in magazine - which one do we prefer)
 //  layout of product infos 
 // font and style of product info 
-// status being shown in the display 
 // hover not added 
+
 // --------------------------
 // - black smth on the top 
 // - the layout of the content is not set. 
 //the products are not put in properly. 
+// things adding and then updating in the cart (yeurr) 
+// status being shown in the display 
 
 // src/app/collection/page.js
 "use client";
 
 import Link from "next/link";
-import React, { useState, useEffect } from "react";
+import React, { useContext } from "react"; // Import useContext from React
+import { CartContext } from "../../context/CartContext"; // Import CartContext
+
 
 
 export default function CollectionPage() {
 
-  const [cart, setCart] = useState([]); // Cart state to track added products
+  const { cart, addToCart } = useContext(CartContext); // Use the cart context
 
   const products = [
     {
@@ -73,37 +77,37 @@ export default function CollectionPage() {
 
 
   // Load cart from localStorage when component mounts
-  useEffect(() => {
-    const storedCart = localStorage.getItem("cart");
-    if (storedCart) {
-      setCart(JSON.parse(storedCart)); // Load the stored cart
-    }
-  }, []);
+  // useEffect(() => {
+  //   const storedCart = localStorage.getItem("cart");
+  //   if (storedCart) {
+  //     setCart(JSON.parse(storedCart)); // Load the stored cart
+  //   }
+  // }, []);
   
-  // Save the cart to localStorage when it changes
-  useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
-  }, [cart]);
+  // // Save the cart to localStorage when it changes
+  // useEffect(() => {
+  //   localStorage.setItem("cart", JSON.stringify(cart));
+  // }, [cart]);
   
   // Handle adding a product to the cart
-  const handleAddToCart = (product, size) => {
-    if (!size) return; // Ensure a size is selected
+  // const handleAddToCart = (product, size) => {
+  //   if (!size) return; // Ensure a size is selected
 
-    const newCartItem = {
-      id: product.id,
-      name: product.name,
-      price: product.price,
-      size,
-    };
-    // Check if the product with the same size already exists in the cart
-    const existingItem = cart.find(
-      (item) => item.id === product.id && item.size === size
-    );
+  //   const newCartItem = {
+  //     id: product.id,
+  //     name: product.name,
+  //     price: product.price,
+  //     size,
+  //   };
+  //   // Check if the product with the same size already exists in the cart
+  //   const existingItem = cart.find(
+  //     (item) => item.id === product.id && item.size === size
+  //   );
 
-    setCart((prevCart) => [...prevCart, newCartItem]);
+  //   setCart((prevCart) => [...prevCart, newCartItem]);
 
     
-  };
+  // };
 
 
   return (
@@ -160,7 +164,7 @@ export default function CollectionPage() {
             <div className="flex flex-col items-start bg-green-200 border border-black lg:items-start">
               <h3 className="text-xl font-serif font-bold">{product.name}</h3>
               <p className="text-lg font-bold mt-2">{product.price}</p>
-              <p className="text-black-600 mt-2">{product.status}</p>
+              {/* <p className="text-black-600 mt-2">{product.status}</p> */}
 
               {/* Size Selector - Only show if product is available */}
               {product.status === "available" && (
@@ -168,7 +172,7 @@ export default function CollectionPage() {
                   {["XS", "S", "M", "L", "XL"].map((size) => (
                     <button
                       key={size}
-                      onClick={() => handleAddToCart(product, size)} // Directly add to cart when size is clicked
+                      onClick={() => addToCart(product, size)} // Use the addToCart from context
                       className="border border-gray-400 px-4 py-2 bg-white text-gray-800 hover:bg-gray-800 hover:text-white"
                     >
                       {size}
@@ -180,7 +184,7 @@ export default function CollectionPage() {
                {/* Single size option for "available_os" status */}
                {product.status === "available_os" && (
                 <button
-                  onClick={() => handleAddToCart(product, "OS")} // Automatically add the single size
+                  onClick={() => addToCart(product, "OS")} // Automatically add the single size
                   className="border border-gray-400 px-4 py-2 bg-white text-gray-800 hover:bg-gray-800 hover:text-white mt-4"
                 >
                   OS

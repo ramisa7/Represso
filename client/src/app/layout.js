@@ -16,11 +16,31 @@ import "./globals.css";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Head from "./head";
-
+import { useContext } from "react";
+import { CartProvider, CartContext } from "../context/CartContext"; // Import CartContext
 const inter = Inter({ subsets: ["latin"] });
+
 
 export default function RootLayout({ children }) {
   const pathname = usePathname();
+
+  return (
+    <html lang="en">
+      <Head />
+      <body className={inter.className}>
+        <CartProvider> {/* Wrap the entire app in CartProvider */}
+          <LayoutContent pathname={pathname}>{children}</LayoutContent>
+        </CartProvider>
+      </body>
+    </html>
+  );
+
+}
+
+
+
+function LayoutContent({ children, pathname}) {
+  const { cart } = useContext(CartContext); // Use the cart context to get cart items
 
   // Define the header links
   const links = [
@@ -63,13 +83,24 @@ export default function RootLayout({ children }) {
               </Link>
 
               {/* Right-aligned link */}
-              <Link
-                href={inactiveLinks[1].href}
-                className={`text-sm font-normal mr-14`}
-                style={{ fontFamily: "serif", fontSize: "1.35rem" }}
-              >
-                {inactiveLinks[1].label}
-              </Link>
+              <div className="relative mr-14">
+                <Link
+                  href={inactiveLinks[1].href}
+                  className={`text-sm font-normal`}
+                  style={{ fontFamily: "serif", fontSize: "1.35rem" }}
+                >
+                  {inactiveLinks[1].label}
+                </Link>
+                {/* Cart item count badge */}
+                {/* {cart.length > 0 && (
+                  <span
+                    className="absolute top-0 right-0 bg-red-600 text-white rounded-full px-2 text-xs"
+                    style={{ transform: "translate(50%, -50%)" }}
+                  >
+                    {cart.length}
+                  </span>
+                )} */}
+              </div>
             </nav>
           </header>
         )}
