@@ -58,7 +58,7 @@ function LayoutContent({ children, pathname}) {
       <Head />
       <body className={inter.className}>
         {/* Conditionally render the header, hiding it only on the landing page */}
-        {pathname !== "/" && (
+        {pathname !== "/" && pathname !== "/world" &&(
           <header
             className="bg-transparent text-black fixed top-0 left-0 w-full z-50"
             style={{ paddingTop: "60px", paddingBottom: "60px" }}

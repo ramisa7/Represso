@@ -1,9 +1,11 @@
 // issues: 
-//  teeny tiny detail of the layout needs to be fixed ( the picture needs to take more space on right, left is okay) 
 // the brand name w header space ( check in collection page - which one is preferred)
 // when we have mag available, what should the sold out button look like(?), OS?
-// add the button & the connection to bag 
 // figure out how each mag page works & build that 
+// ques: all articles are under issue 1 or what(?) 
+//sold out is not done 
+// check out in other versions, why so much white space all around - make it fit to the screen 
+// adding magazine to the bag not implemented 
  
 
 //----------------
@@ -14,10 +16,15 @@
 
 
 // src/app/magazine/page.js
-import React from "react";
-import Link from "next/link";
+"use client";
+import React, { useContext } from "react";
+import Link from "next/link"; 
+import { CartContext } from "../../context/CartContext"; // Import CartContext
+
 
 export default function MagazinePage() {
+  const { addItemToCart } = useContext(CartContext);
+
   const magazines = [
     {
       id: 1,
@@ -25,23 +32,35 @@ export default function MagazinePage() {
       subtitle: "Bangladesh Protests: Merit! Merit! Merit!",
       image: "https://via.placeholder.com/300", // Replace with actual image URL
       link: "/magazine/issue-01",
+      price: 18,
+      status: "sold out",
     },
     {
       id: 2,
-      title: "The Rise of Sustainable Fashion",
-      subtitle: "Eco-friendly Brands Making a Difference",
+      title: "US Presidential Election’s Impact",
+      subtitle: "Kamala Harris on Gaza: Long-Awaited Perspectives",
       image: "https://via.placeholder.com/300",
       link: "/magazine/issue-02",
+      price: 18,
+      status: "sold out",
     },
     {
       id: 3,
-      title: "Winter Fashion Trends 2024",
-      subtitle: "Essential Pieces for the Cold Season",
+      title: "A Growing Threat to Democracy and Diversity",
+      subtitle: "Rise of Far-Right Parties in Europe",
       image: "https://via.placeholder.com/300",
       link: "/magazine/issue-03",
+      price: 18,
+      status: "sold out",
     },
     // Add more issues as needed
   ];
+
+  const handleAddToBag = (magazine) => {
+    if (magazine.status !== "sold out") {
+      addItemToCart(magazine); // Add the magazine to the cart using CartContext
+    }
+  };
 
   return (
     <div className="min-h-screen bg-white text-slate-800 p-8">
@@ -60,8 +79,9 @@ export default function MagazinePage() {
           </h1>
         </Link>
       </div>
+
       {/* Magazine Issues Section */}
-      <section className="flex flex-col gap-8 mt-8">
+      <section className="flex flex-col gap-[60px] mt-8">
         {magazines.map((magazine) => (
           <div
             key={magazine.id}
@@ -77,13 +97,13 @@ export default function MagazinePage() {
             {/* Magazine Details */}
             <div className="flex flex-col lg:ml-8 lg:w-1/2">
               <Link href={magazine.link}>
-                <h2 className="text-xl font-serif font-medium mb-4 text-left cursor-pointer hover:underline">
+                <h2 className="text-xl font-serif font-medium mb-[60px] text-left cursor-pointer hover:underline">
                   {magazine.title}
                 </h2>
               </Link>
 
               <Link href={magazine.link}>
-                <h3 className="text-xl font-serif font-bold text-left cursor-pointer hover:underline">
+                <h3 className="text-xl font-serif font-bold mt-0 text-left cursor-pointer hover:underline">
                   {magazine.subtitle}
                 </h3>
               </Link>
@@ -91,6 +111,53 @@ export default function MagazinePage() {
           </div>
         ))}
       </section>
+
+      {/* New Magazine Issue */} 
+      <div className="flex justify-center items-center h-screen mt-16">
+        <div className="flex items-center gap-[60px]">
+          {/* Left Text Section */}
+          <div className="flex flex-col justify-center items-end">
+            <span className="font-serif text-lg">issue 1</span>
+            <span className="font-serif text-lg">2024</span>
+          </div>
+
+          {/* Magazine Cover Image */}
+          <img
+            src="https://via.placeholder.com/300x600" // Replace with your actual image URL
+            alt="Magazine Issue"
+            className="w-[400px] h-[600px] object-cover"
+          />
+
+          {/* Right Text Section with button */}
+          <div className="flex flex-col justify-center items-start">
+            <span className="font-serif text-lg">18 €</span>
+            <button
+              onClick={() => handleAddToBag(magazines[0])} // Adjust the magazine index as needed
+              className={`text-lg mt-2 py-2 px-4 rounded ${
+                magazines[0].status === "sold out"
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-blue-500 hover:bg-blue-600 text-white"
+              }`}
+              disabled={magazines[0].status === "sold out"}
+            >
+              {magazines[0].status === "sold out" ? "Sold Out" : "Add to Bag"}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Pagination Button with Thumbnail */}
+      <div className="flex justify-center mt-6">
+        <Link href="/world" passHref>
+          <button className="w-[20px] h-[20px] rounded-full">
+            <img
+              src="/thumbnail_logo.png" // Replace with the actual thumbnail image
+              alt="Represso Legal"
+              className="w-full h-full object-cover"
+            />
+          </button>
+        </Link>
+      </div>
     </div>
   );
 }

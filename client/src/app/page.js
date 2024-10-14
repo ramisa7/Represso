@@ -2,6 +2,7 @@
 // - header is black now which might have made 
 // - the page is scrllable now
 // - there is space between the text and the bottom of the page
+// why does after the landing page, the page is movable to the right, and there is balck screen there (Naurr) 
 
 // src/app/page.js
 import React from "react";
