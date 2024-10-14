@@ -19,7 +19,7 @@
 "use client";
 import React, { useContext } from "react";
 import Link from "next/link"; 
-import { CartContext } from "../../context/CartContext"; // Import CartContext
+// import { CartContext } from "../../context/CartContext"; // Import CartContext
 
 
 export default function MagazinePage() {

@@ -29,6 +29,7 @@ export const CartProvider = ({ children }) => {
       name: product.name,
       price: product.price,
       size,
+      quantity: 1,
     };
 
     // Check if the item with the same product ID and size already exists
