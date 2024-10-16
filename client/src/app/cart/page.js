@@ -1,11 +1,14 @@
 // //issue: 
-// the setup is not what we want 
-// price is being wrong 
+// the setup is not what we want, calculation needed to fix the setup 
+// paypal integration 
+// logo at the end 
 
 "use client";
 
 // src/app/bag/page.js
 import React, { useEffect, useState } from "react";
+import Link from 'next/link';
+
 
 export default function BagPage() {
   const [cart, setCart] = useState([]);
@@ -61,9 +64,59 @@ export default function BagPage() {
     return acc + (itemPrice * item.quantity);
   }, 0);  // Default accumulator value is 0
 
- 
+  // Load PayPal SDK and render PayPal button
+  useEffect(() => {
+    const addPayPalScript = () => {
+      const script = document.createElement('script');
+      script.src = "https://www.paypal.com/sdk/js?client-id=YOUR_CLIENT_ID";
+      script.async = true;
+      script.onload = () => {
+        window.paypal.Buttons({
+          createOrder: (data, actions) => {
+            return actions.order.create({
+              purchase_units: [{
+                amount: {
+                  value: totalPrice.toFixed(2) // Set total price for PayPal checkout
+                }
+              }]
+            });
+          },
+          onApprove: (data, actions) => {
+            return actions.order.capture().then(details => {
+              alert('Transaction completed by ' + details.payer.name.given_name);
+            });
+          }
+        }).render('#paypal-button-container');
+      };
+      document.body.appendChild(script);
+    };
+  
+    // Add PayPal script only if it hasn't been added before
+    if (!window.paypal) {
+      addPayPalScript();
+    } else {
+      // Render PayPal button if the SDK is already loaded
+      window.paypal.Buttons({
+        createOrder: (data, actions) => {
+          return actions.order.create({
+            purchase_units: [{
+              amount: {
+                value: totalPrice.toFixed(2) // Set total price for PayPal checkout
+              }
+            }]
+          });
+        },
+        onApprove: (data, actions) => {
+          return actions.order.capture().then(details => {
+            alert('Transaction completed by ' + details.payer.name.given_name);
+          });
+        }
+      }).render('#paypal-button-container');
+    }
+  }, [totalPrice]);
+  
   return (
-    <div className={`min-h-screen bg-white text-slate-800 ${cart.length > 0 ? 'p-40' : ''}`}>
+    <div className={`relative min-h-screen bg-white text-slate-800 ${cart.length > 0 ? 'p-40' : ''}`}>
       {/* Check if the cart is empty */}
       {cart.length === 0 ? (
         <div className="flex justify-center items-center h-screen overflow-hidden">
@@ -217,7 +270,31 @@ export default function BagPage() {
             <span className="font-serif text-xl">Total</span>
             <span className="font-serif text-xl font-bold">{totalPrice.toFixed(2)} €</span>
           </div>
+
+          {/** paypal integration for the user to pay */}
+          {/* PayPal Button */}
+          <div id="paypal-button-container" className="my-8"></div>
+
+          {/** brand logo */}
+          <div className="flex justify-center items-center">
+          <Link href="magazine/page.js" passHref>
+            <h1
+              className="font-serif text-[20vw] text-center cursor-pointer pt-0 pb-0"
+              style={{
+                color: "rgb(89, 91, 142)",
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                userSelect: "none",
+              }}
+            >
+              REPRESSO
+            </h1>
+          </Link>
+          </div>
+
         </>
+
+
       )}
     </div>
   );
